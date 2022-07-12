@@ -59,6 +59,7 @@ ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   justify-content: center;
+  gap: 0.5rem;
 }
 .item-name {
   text-align: left;
@@ -79,4 +80,10 @@ ul {
 .previous-item-price {
   text-decoration: line-through;
   color: #7a859b;
+}
+.shopping-item {
+  display: grid;
+  grid-auto-flow: row;
+  justify-content: start;
+  gap: 0.5rem;
 }
