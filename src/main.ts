@@ -145,14 +145,7 @@ let state: State = {
     },
   ],
 };
-
-function render() {
-  // finding the container, and clearing it
-  let appEl = document.querySelector("#app");
-  if (appEl === null) return;
-  appEl.textContent = "";
-
-  // Header
+function renderHeader() {
   let headerEl = document.createElement("header");
   headerEl.className = "header";
   //Header left
@@ -208,79 +201,9 @@ function render() {
   rightList.append(rightLiItem, rightLiItem1, rightLiItem2);
   rightDivEl.append(rightNavE);
   headerEl.append(leftDivEl, rightDivEl);
-  appEl.append(headerEl);
-
-  //   <main class="main">
-  //   <h2 class="title">Home</h2>
-  //   <ul class="shoping-items">
-  //     <li class="shopping-item">
-  //       <img
-  //         class="shoping-item__img"
-  //         src="https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1"
-  //         alt="T-shirt"
-  //       />
-  //       <h3 class="item-name">Crewneck T-shirt 3-Pack</h3>
-  //       <p class="item-price">
-  //       <span class="previous-item-price">£40</span>
-  //       <span class="discounted-item-price">£21.99</span>
-  //       </p>
-  //     </li>
-  //     <li class="shopping-item">
-  //       <img
-  //         class="shoping-item__img"
-  //         src="https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1"
-  //         alt="T-shirt"
-  //       />
-  //       <h3 class="item-name">Crewneck T-shirt 3-Pack</h3>
-  //       <p class="item-price">£19.99</p>
-  //     </li>
-  //     <li class="shopping-item">
-  //       <img
-  //         class="shoping-item__img"
-  //         src="https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1"
-  //         alt="T-shirt"
-  //       />
-  //       <h3 class="item-name">Crewneck T-shirt 3-Pack</h3>
-  //       <p class="item-price">$19.99</p>
-  //     </li>
-  //     <li class="shopping-item">
-  //       <img
-  //         class="shoping-item__img"
-  //         src="https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1"
-  //         alt="T-shirt"
-  //       />
-  //       <h3 class="item-name">Crewneck T-shirt 3-Pack</h3>
-  //       <p class="item-price">$19.99</p>
-  //     </li>
-  //     <li class="shopping-item">
-  //       <img
-  //         class="shoping-item__img"
-  //         src="https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1"
-  //         alt="T-shirt"
-  //       />
-  //       <h3 class="item-name">Crewneck T-shirt 3-Pack</h3>
-  //       <p class="item-price">$19.99</p>
-  //     </li>
-  //     <li class="shopping-item">
-  //       <img
-  //         class="shoping-item__img"
-  //         src="https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1"
-  //         alt="T-shirt"
-  //       />
-  //       <h3 class="item-name">Crewneck T-shirt 3-Pack</h3>
-  //       <p class="item-price">$19.99</p>
-  //     </li>
-  //     <li class="shopping-item">
-  //       <img
-  //         class="shoping-item__img"
-  //         src="https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1"
-  //         alt="T-shirt"
-  //       />
-  //       <h3 class="item-name">Crewneck T-shirt 3-Pack</h3>
-  //       <p class="item-price">$19.99</p>
-  //     </li>
-  //   </ul>
-  // </main>
+  return headerEl;
+}
+function renderMain() {
   let mainEl = document.createElement("main");
   mainEl.className = "main";
 
@@ -292,45 +215,56 @@ function render() {
   shopingItemsList.className = "shoping-items";
 
   for (let item of state.store) {
-    let shopingItemEl = document.createElement("li");
-    shopingItemEl.className = "shopping-item";
-
-    let shopingItemImageEl = document.createElement("img");
-    shopingItemImageEl.className = "shoping-item__img";
-    shopingItemImageEl.src = item.image;
-    shopingItemImageEl.alt = item.name;
-
-    let shopingItemNameEl = document.createElement("h3");
-    shopingItemNameEl.className = "item-name";
-    shopingItemNameEl.textContent = item.name;
-
-    let shopingItemPriceEl = document.createElement("p");
-    shopingItemPriceEl.className = "item-price";
-    let shopingItemPriceSpanEl = document.createElement("span");
-    shopingItemPriceSpanEl.className = "previous-item-price";
-    shopingItemPriceSpanEl.textContent = "£" + item.discountedPrice;
-    let shopingItemPriceSpanEl1 = document.createElement("span");
-    shopingItemPriceSpanEl1.className = "discounted-item-price";
-    shopingItemPriceSpanEl1.textContent = "£" + item.price;
-
-    if (item.discountedPrice) {
-      shopingItemPriceEl.append(
-        shopingItemPriceSpanEl,
-        shopingItemPriceSpanEl1
-      );
-    } else {
-      shopingItemPriceEl.append(shopingItemPriceSpanEl1);
-    }
-
-    shopingItemEl.append(
-      shopingItemImageEl,
-      shopingItemNameEl,
-      shopingItemPriceEl
-    );
-    shopingItemsList.append(shopingItemEl);
+    renderShoppingItems(item, shopingItemsList);
   }
   mainEl.append(titleEl, shopingItemsList);
-  appEl.append(mainEl);
+  return mainEl;
+}
+function renderShoppingItems(item: Store, shopingItemsList: HTMLElement) {
+  let shopingItemEl = document.createElement("li");
+  shopingItemEl.className = "shopping-item";
+
+  let shopingItemImageEl = document.createElement("img");
+  shopingItemImageEl.className = "shoping-item__img";
+  shopingItemImageEl.src = item.image;
+  shopingItemImageEl.alt = item.name;
+
+  let shopingItemNameEl = document.createElement("h3");
+  shopingItemNameEl.className = "item-name";
+  shopingItemNameEl.textContent = item.name;
+
+  let shopingItemPriceEl = document.createElement("p");
+  shopingItemPriceEl.className = "item-price";
+  let shopingItemPriceSpanEl = document.createElement("span");
+  shopingItemPriceSpanEl.className = "previous-item-price";
+  shopingItemPriceSpanEl.textContent = "£" + item.discountedPrice;
+  let shopingItemPriceSpanEl1 = document.createElement("span");
+  shopingItemPriceSpanEl1.className = "discounted-item-price";
+  shopingItemPriceSpanEl1.textContent = "£" + item.price;
+
+  if (item.discountedPrice) {
+    shopingItemPriceEl.append(shopingItemPriceSpanEl, shopingItemPriceSpanEl1);
+  } else {
+    shopingItemPriceEl.append(shopingItemPriceSpanEl1);
+  }
+
+  shopingItemEl.append(
+    shopingItemImageEl,
+    shopingItemNameEl,
+    shopingItemPriceEl
+  );
+  shopingItemsList.append(shopingItemEl);
+}
+function render() {
+  // finding the container, and clearing it
+  let appEl = document.querySelector("#app");
+  if (appEl === null) return;
+  appEl.textContent = "";
+
+  let headerEl = renderHeader();
+
+  let mainEl = renderMain();
+
+  appEl.append(headerEl, mainEl);
 }
 render();
-window.state = state;
