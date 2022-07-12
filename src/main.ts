@@ -255,6 +255,32 @@ function renderShoppingItems(item: Store, shopingItemsList: HTMLElement) {
   );
   shopingItemsList.append(shopingItemEl);
 }
+function renderFooter() {
+    // <footer class="footer">
+    // <h3 class="footer__logo">Hollixton</h3>
+    // <p class="uk">
+    //   <img class="uk-flag" src="./330425 (1).png" alt="uk flag">
+    //   United Kingdom
+    // </p>
+    //   </footer>
+    let footerEl = document.createElement("footer");
+    footerEl.className = "footer";
+    let footerLogoEl = document.createElement("h3");
+    footerLogoEl.className = "footer__logo";
+    footerLogoEl.textContent = "Hollixton";
+    let footerUkEl = document.createElement("p");
+    footerUkEl.className = "uk";
+    let footerUkFlagEl = document.createElement("img");
+    footerUkFlagEl.className = "uk-flag";
+    footerUkFlagEl.src = "./330425 (1).png";
+    footerUkFlagEl.alt = "uk flag";
+    let footerUkTextEl = document.createElement("span");
+    footerUkTextEl.textContent = "United Kingdom";
+    footerUkEl.append(footerUkFlagEl, footerUkTextEl);
+    footerEl.append(footerLogoEl, footerUkEl);
+    return footerEl;
+
+}
 function render() {
   // finding the container, and clearing it
   let appEl = document.querySelector("#app");
@@ -264,7 +290,9 @@ function render() {
   let headerEl = renderHeader();
 
   let mainEl = renderMain();
+  
+  let footerEl = renderFooter();
 
-  appEl.append(headerEl, mainEl);
+  appEl.append(headerEl, mainEl, footerEl);
 }
 render();

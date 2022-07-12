@@ -10,6 +10,9 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: grid;
+  grid-auto-flow: row;
+  height: 100vh;
 }
 
 ul {
@@ -69,7 +72,7 @@ ul {
 }
 .item-price {
   text-align: left;
-  padding: 0rem 0.5rem ;
+  padding: 0rem 0.5rem;
   font-size: 0.9rem;
   font-weight: bold;
   display: grid;
@@ -86,4 +89,28 @@ ul {
   grid-auto-flow: row;
   justify-content: start;
   gap: 0.5rem;
+}
+.footer {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  height: 10vh;
+  padding: 0.5rem;
+
+  align-content: center;
+  outline: solid 1px #2c3e50;
+  color: #1c2e54;
+}
+.uk {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  gap: 0.5rem;
+  font-weight: bold;
+
+  align-items: center;
+}
+.uk-flag {
+  width: 20px;
+  height: 20px;
 }
