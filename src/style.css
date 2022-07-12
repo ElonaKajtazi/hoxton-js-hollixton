@@ -37,13 +37,46 @@ ul {
   justify-content: start;
   gap: 1rem;
   font-weight: bold;
-
-
 }
 .right__nav-list {
   display: grid;
   grid-auto-flow: column;
   justify-content: end;
   gap: 1rem;
-
+}
+.main {
+  padding: 0.5rem 2rem;
+}
+.shoping-item__img {
+  width: 200px;
+}
+.title {
+  text-align: left;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+.shoping-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  justify-content: center;
+}
+.item-name {
+  text-align: left;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  color: #1b2d53;
+}
+.item-price {
+  text-align: left;
+  padding: 0rem 0.5rem ;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  gap: 0.5rem;
+}
+.previous-item-price {
+  text-decoration: line-through;
+  color: #7a859b;
 }
