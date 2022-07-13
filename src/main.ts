@@ -232,20 +232,26 @@ function renderShoppingItems(item: Store, shopingItemsList: HTMLElement) {
   let shopingItemNameEl = document.createElement("h3");
   shopingItemNameEl.className = "item-name";
   shopingItemNameEl.textContent = item.name;
-
+  // <p class="item-price">
+  // <span class="previous-item-price">£40</span>
+  // <span class="discounted-item-price">£21.99</span>
+  // </p>
   let shopingItemPriceEl = document.createElement("p");
   shopingItemPriceEl.className = "item-price";
-  let shopingItemPriceSpanEl = document.createElement("span");
-  shopingItemPriceSpanEl.className = "previous-item-price";
-  shopingItemPriceSpanEl.textContent = "£" + item.discountedPrice;
-  let shopingItemPriceSpanEl1 = document.createElement("span");
-  shopingItemPriceSpanEl1.className = "discounted-item-price";
-  shopingItemPriceSpanEl1.textContent = "£" + item.price;
-
   if (item.discountedPrice) {
+    let shopingItemPriceSpanEl = document.createElement("span");
+    shopingItemPriceSpanEl.className = "previous-item-price";
+    shopingItemPriceSpanEl.textContent = "£" + item.price;
+
+    let shopingItemPriceSpanEl1 = document.createElement("span");
+    shopingItemPriceSpanEl1.className = "discounted-item-price";
+    shopingItemPriceSpanEl1.textContent = "£" + item.discountedPrice;
     shopingItemPriceEl.append(shopingItemPriceSpanEl, shopingItemPriceSpanEl1);
   } else {
-    shopingItemPriceEl.append(shopingItemPriceSpanEl1);
+    let shopingItemPriceSpanEl = document.createElement("span");
+    shopingItemPriceSpanEl.className = "item-price";
+    shopingItemPriceSpanEl.textContent = "£" + item.price;
+    shopingItemPriceEl.append(shopingItemPriceSpanEl);
   }
 
   shopingItemEl.append(
@@ -256,30 +262,27 @@ function renderShoppingItems(item: Store, shopingItemsList: HTMLElement) {
   shopingItemsList.append(shopingItemEl);
 }
 function renderFooter() {
-    // <footer class="footer">
-    // <h3 class="footer__logo">Hollixton</h3>
-    // <p class="uk">
-    //   <img class="uk-flag" src="./330425 (1).png" alt="uk flag">
-    //   United Kingdom
-    // </p>
-    //   </footer>
-    let footerEl = document.createElement("footer");
-    footerEl.className = "footer";
-    let footerLogoEl = document.createElement("h3");
-    footerLogoEl.className = "footer__logo";
-    footerLogoEl.textContent = "Hollixton";
-    let footerUkEl = document.createElement("p");
-    footerUkEl.className = "uk";
-    let footerUkFlagEl = document.createElement("img");
-    footerUkFlagEl.className = "uk-flag";
-    footerUkFlagEl.src = "./330425 (1).png";
-    footerUkFlagEl.alt = "uk flag";
-    let footerUkTextEl = document.createElement("span");
-    footerUkTextEl.textContent = "United Kingdom";
-    footerUkEl.append(footerUkFlagEl, footerUkTextEl);
-    footerEl.append(footerLogoEl, footerUkEl);
-    return footerEl;
+  let footerEl = document.createElement("footer");
+  footerEl.className = "footer";
 
+  let footerLogoEl = document.createElement("h3");
+  footerLogoEl.className = "footer__logo";
+
+  footerLogoEl.textContent = "Hollixton";
+  let footerUkEl = document.createElement("p");
+  footerUkEl.className = "uk";
+
+  let footerUkFlagEl = document.createElement("img");
+  footerUkFlagEl.className = "uk-flag";
+  footerUkFlagEl.src = "./330425 (1).png";
+  footerUkFlagEl.alt = "uk flag";
+
+  let footerUkTextEl = document.createElement("span");
+  footerUkTextEl.textContent = "United Kingdom";
+  footerUkEl.append(footerUkFlagEl, footerUkTextEl);
+  footerEl.append(footerLogoEl, footerUkEl);
+
+  return footerEl;
 }
 function render() {
   // finding the container, and clearing it
@@ -290,7 +293,7 @@ function render() {
   let headerEl = renderHeader();
 
   let mainEl = renderMain();
-  
+
   let footerEl = renderFooter();
 
   appEl.append(headerEl, mainEl, footerEl);
