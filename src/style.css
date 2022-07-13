@@ -18,13 +18,16 @@
 ul {
   list-style: none;
 }
+img {
+  width: 100%;
+}
 .header {
   display: grid;
   /* background-color: red; */
   grid-template-columns: 1fr 1fr;
   padding: 0.5rem 2rem;
   align-content: center;
-  outline: solid 1px #2c3e50;
+  /* outline: solid 1px #2c3e50; */
   color: #1c2e54;
 }
 .header__left {
@@ -79,14 +82,13 @@ ul {
   grid-auto-flow: column;
   justify-content: start;
   gap: 0.5rem;
-
 }
 .previous-item-price {
   text-decoration: line-through;
   color: #7a859b;
 }
-.discounted-item-price{
-  color: red
+.discounted-item-price {
+  color: red;
 }
 .shopping-item {
   display: grid;
@@ -98,12 +100,13 @@ ul {
   display: grid;
   grid-template-columns: auto auto;
   justify-content: space-between;
-  height: 10vh;
+  /* height: 10vh; */
   padding: 0.5rem;
 
   align-content: center;
-  outline: solid 1px #2c3e50;
+  /* outline: solid 1px #2c3e50; */
   color: #1c2e54;
+  background-color: #eeeeee;
 }
 .uk {
   display: grid;
@@ -117,4 +120,24 @@ ul {
 .uk-flag {
   width: 20px;
   height: 20px;
+}
+
+.product-details {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.shoping-item-details-img {
+  width: 400px;
+}
+.add-to-bag-button {
+
+  background-color: #0f6c9e;
+  color: white;
+  /* height: 50px; */
+  padding: 1rem;
+  border-radius: 25px;
+  border: 5px solid white;
+  font-weight: bolder;
 }
