@@ -1,6 +1,6 @@
 import "./style.css";
-
-type Store = {
+// Creating the storeItem type
+type StoreItem = {
   id: number;
   type: string;
   name: string;
@@ -10,19 +10,21 @@ type Store = {
   dateEntered: string;
   stock: number;
 };
+// creating the state type
 type State = {
-  store: Store[];
-  selectedItem: Store | null;
+  store: StoreItem[];
+  selectedItem: StoreItem | null;
   show: "itmes" | "details";
   page: "home" | "girls" | "guys" | "sale";
 };
-
+// creating state
 let state: State = {
   store: [],
   selectedItem: null,
   show: "itmes",
   page: "home",
 };
+// fetching the data from the server
 function getStoreItems() {
   fetch("http://localhost:3005/store")
     .then((rsp) => rsp.json())
@@ -31,13 +33,15 @@ function getStoreItems() {
       render();
     });
 }
-function selectedItem(item: Store) {
+// creating a function to select shopping item
+function selectShoppingItem(item: StoreItem) {
   state.selectedItem = item;
 }
+// creating a function that deselecta a shopping item and shows the home page
 function deselectItem() {
   state.selectedItem = null;
 }
-
+// rendering header
 function renderHeader(appEl: Element) {
   let headerEl = document.createElement("header");
   headerEl.className = "header";
@@ -116,6 +120,7 @@ function renderHeader(appEl: Element) {
 
   appEl.append(headerEl);
 }
+// rendering the Home page
 function renderHomePage(appEl: Element) {
   let mainEl = document.createElement("main");
   mainEl.className = "main";
@@ -133,7 +138,8 @@ function renderHomePage(appEl: Element) {
   mainEl.append(titleEl, shopingItemsList);
   appEl.append(mainEl);
 }
-function renderGirlsSection(appEl: Element) {
+// rendering girl items section
+function renderGirlItemsSection(appEl: Element) {
   let mainEl = document.createElement("main");
   mainEl.className = "main";
 
@@ -152,7 +158,8 @@ function renderGirlsSection(appEl: Element) {
   mainEl.append(titleEl, shopingItemsList);
   appEl.append(mainEl);
 }
-function rendeGuyssSection(appEl: Element) {
+// rendering guy items section
+function rendeGuyItemsSection(appEl: Element) {
   let mainEl = document.createElement("main");
   mainEl.className = "main";
 
@@ -171,6 +178,7 @@ function rendeGuyssSection(appEl: Element) {
   mainEl.append(titleEl, shopingItemsList);
   appEl.append(mainEl);
 }
+// rendering sale items section
 function rendeInSaleSection(appEl: Element) {
   let mainEl = document.createElement("main");
   mainEl.className = "main";
@@ -190,12 +198,12 @@ function rendeInSaleSection(appEl: Element) {
   mainEl.append(titleEl, shopingItemsList);
   appEl.append(mainEl);
 }
-
-function renderShoppingItems(item: Store, shopingItemsList: HTMLElement) {
+//  rendering the shopping items that we are going to loop over at all the above functions except the header
+function renderShoppingItems(item: StoreItem, shopingItemsList: HTMLElement) {
   let shopingItemEl = document.createElement("li");
   shopingItemEl.className = "shopping-item";
   shopingItemEl.addEventListener("click", () => {
-    selectedItem(item);
+    selectShoppingItem(item);
     render();
   });
   let shopingItemImageEl = document.createElement("img");
@@ -235,7 +243,8 @@ function renderShoppingItems(item: Store, shopingItemsList: HTMLElement) {
   );
   shopingItemsList.append(shopingItemEl);
 }
-function renderFooter() {
+// rendering footer
+function renderFooter(appEl: Element) {
   let footerEl = document.createElement("footer");
   footerEl.className = "footer";
 
@@ -255,9 +264,9 @@ function renderFooter() {
   footerUkTextEl.textContent = "United Kingdom";
   footerUkEl.append(footerUkFlagEl, footerUkTextEl);
   footerEl.append(footerLogoEl, footerUkEl);
-
-  return footerEl;
+  appEl.append(footerEl);
 }
+// rendering specifick item page
 function renderProductDetailsPage(appEl: Element) {
   let productDetailsDiv = document.createElement("div");
   productDetailsDiv.className = "product-details";
@@ -289,6 +298,7 @@ function renderProductDetailsPage(appEl: Element) {
 
   appEl.append(productDetailsDiv);
 }
+// rendering the whole app
 function render() {
   // finding the container, and clearing it
   let appEl = document.querySelector("#app");
@@ -302,13 +312,13 @@ function render() {
 
   // if (state.page === "home") renderHomePage(appEl);
   if (state.selectedItem === null && state.page === "girls")
-    renderGirlsSection(appEl);
+    renderGirlItemsSection(appEl);
   if (state.selectedItem === null && state.page === "guys")
-    rendeGuyssSection(appEl);
+    rendeGuyItemsSection(appEl);
   if (state.selectedItem === null && state.page === "sale")
     rendeInSaleSection(appEl);
 
-  renderFooter();
+  renderFooter(appEl);
   // let mainEl = renderGirlsSection();
   // let footerEl = renderFooter();
   // let mainEl1 = renderProductDetailsPage();
