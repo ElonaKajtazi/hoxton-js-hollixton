@@ -101,7 +101,7 @@ img {
   grid-template-columns: auto auto;
   justify-content: space-between;
   /* height: 10vh; */
-  padding: 0.5rem;
+  padding: 1rem;
 
   align-content: center;
   /* outline: solid 1px #2c3e50; */
@@ -132,7 +132,6 @@ img {
   width: 400px;
 }
 .add-to-bag-button {
-
   background-color: #0f6c9e;
   color: white;
   /* height: 50px; */

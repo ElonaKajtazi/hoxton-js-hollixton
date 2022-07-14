@@ -14,148 +14,31 @@ type State = {
   store: Store[];
   selectedItem: Store | null;
   show: "itmes" | "details";
+  page: "home" | "girls" | "guys" | "sale";
 };
 
 let state: State = {
-  store: [
-    {
-      id: 1,
-      type: "Guys",
-      name: "Crewneck T-Shirt 3-Pack",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1",
-      price: 40,
-      discountedPrice: 21.99,
-      dateEntered: "2021/08/10",
-      stock: 10,
-    },
-    {
-      id: 2,
-      type: "Girls",
-      name: "Smocked Tiered Mini Dress",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_359-1220-1911-805_prod1",
-      price: 29,
-      dateEntered: "2021/07/10",
-      stock: 5,
-    },
-    {
-      id: 3,
-      type: "Girls",
-      name: "Gilly Hicks Cozy Joggers",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_346-1252-0485-116_prod1",
-      price: 27,
-      dateEntered: "2021/05/06",
-      stock: 15,
-    },
-    {
-      id: 4,
-      type: "Guys",
-      name: "Gilly Hicks Go Energize 2-in-1 Running Short",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_346-1614-0521-900_prod1",
-      price: 29,
-      dateEntered: "2021/07/10",
-      stock: 20,
-    },
-    {
-      id: 5,
-      type: "Guys",
-      name: "Gilly Hicks Woven Boxer",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_309-1408-0413-136_prod1",
-      price: 12,
-      dateEntered: "2021/07/10",
-      stock: 2,
-    },
-    {
-      id: 6,
-      type: "Guys",
-      name: "Gilly Hicks Smiley Socks 2-Pack",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_354-1020-0010-900_prod1",
-      price: 14,
-      dateEntered: "2021/06/11",
-      stock: 1,
-    },
-    {
-      id: 7,
-      type: "Guys",
-      name: "Stretch Poplin Slim Fit shirt",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_325-1072-0609-214_prod1",
-      price: 29,
-      discountedPrice: 20.3,
-      dateEntered: "2020/02/10",
-      stock: 13,
-    },
-    {
-      id: 8,
-      type: "Guys",
-      name: "Must-Have Crewneck T-Shirt 5-Pack",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_324-1072-0132-108_prod1",
-      price: 55,
-      discountedPrice: 34.99,
-      dateEntered: "2021/08/10",
-      stock: 12,
-    },
-    {
-      id: 9,
-      type: "Guys",
-      name: "Print Logo Graphic Tee",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_323-1957-2978-908_prod1",
-      price: 25,
-      discountedPrice: 11.99,
-      dateEntered: "2021/04/10",
-      stock: 17,
-    },
-    {
-      id: 10,
-      type: "Girls",
-      name: "Ultra High-Rise Dad Sweatpants",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_347-1074-0669-100_prod1",
-      price: 35,
-      discountedPrice: 14.99,
-      dateEntered: "2021/08/01",
-      stock: 6,
-    },
-    {
-      id: 11,
-      type: "Girls",
-      name: "Crop Oversized Hoodie",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_352-3541-0604-100_prod1",
-      price: 35,
-      discountedPrice: 12.99,
-      dateEntered: "2021/08/01",
-      stock: 8,
-    },
-    {
-      id: 12,
-      type: "Girls",
-      name: "Gilly Hicks Socks 2-Pack",
-      image:
-        "https://img.hollisterco.com/is/image/anf/KIC_354-1013-0002-100_prod1",
-      price: 14,
-      discountedPrice: 5.99,
-      dateEntered: "2021/07/10",
-      stock: 10,
-    },
-  ],
+  store: [],
   selectedItem: null,
   show: "itmes",
+  page: "home",
 };
+function getStoreItems() {
+  fetch("http://localhost:3005/store")
+    .then((rsp) => rsp.json())
+    .then((store) => {
+      state.store = store;
+      render();
+    });
+}
 function selectedItem(item: Store) {
   state.selectedItem = item;
 }
 function deselectItem() {
   state.selectedItem = null;
 }
-function renderHeader() {
+
+function renderHeader(appEl: Element) {
   let headerEl = document.createElement("header");
   headerEl.className = "header";
   //Header left
@@ -167,8 +50,9 @@ function renderHeader() {
   logoEl.textContent = "Hollixton";
   logoEl.addEventListener("click", () => {
     deselectItem();
-    render()
-  })
+    state.page = "home";
+    render();
+  });
   let leftNavE = document.createElement("nav");
 
   let leftList = document.createElement("ul");
@@ -177,14 +61,29 @@ function renderHeader() {
   let leftLiItem = document.createElement("li");
   leftLiItem.className = "nav-list__item";
   leftLiItem.textContent = "Girls";
+  leftLiItem.addEventListener("click", function () {
+    deselectItem();
+    state.page = "girls";
+    render();
+  });
 
   let leftLiItem1 = document.createElement("li");
   leftLiItem1.className = "nav-list__item";
   leftLiItem1.textContent = "Guys";
+  leftLiItem1.addEventListener("click", function () {
+    deselectItem();
+    state.page = "guys";
+    render();
+  });
 
   let leftLiItem2 = document.createElement("li");
   leftLiItem2.className = "nav-list__item";
   leftLiItem2.textContent = "Sale";
+  leftLiItem2.addEventListener("click", function () {
+    deselectItem();
+    state.page = "sale";
+    render();
+  });
 
   leftDivEl.append(logoEl, leftNavE);
   leftNavE.append(leftList);
@@ -214,9 +113,10 @@ function renderHeader() {
   rightList.append(rightLiItem, rightLiItem1, rightLiItem2);
   rightDivEl.append(rightNavE);
   headerEl.append(leftDivEl, rightDivEl);
-  return headerEl;
+
+  appEl.append(headerEl);
 }
-function renderMain() {
+function renderHomePage(appEl: Element) {
   let mainEl = document.createElement("main");
   mainEl.className = "main";
 
@@ -231,8 +131,66 @@ function renderMain() {
     renderShoppingItems(item, shopingItemsList);
   }
   mainEl.append(titleEl, shopingItemsList);
-  return mainEl;
+  appEl.append(mainEl);
 }
+function renderGirlsSection(appEl: Element) {
+  let mainEl = document.createElement("main");
+  mainEl.className = "main";
+
+  let titleEl = document.createElement("h2");
+  titleEl.className = "title";
+  titleEl.textContent = "Home";
+
+  let shopingItemsList = document.createElement("ul");
+  shopingItemsList.className = "shoping-items";
+  let items = state.store.filter((item) => {
+    return item.type === "Girls";
+  });
+  for (let item of items) {
+    renderShoppingItems(item, shopingItemsList);
+  }
+  mainEl.append(titleEl, shopingItemsList);
+  appEl.append(mainEl);
+}
+function rendeGuyssSection(appEl: Element) {
+  let mainEl = document.createElement("main");
+  mainEl.className = "main";
+
+  let titleEl = document.createElement("h2");
+  titleEl.className = "title";
+  titleEl.textContent = "Home";
+
+  let shopingItemsList = document.createElement("ul");
+  shopingItemsList.className = "shoping-items";
+  let guisItems = state.store.filter((item) => {
+    return item.type === "Guys";
+  });
+  for (let item of guisItems) {
+    renderShoppingItems(item, shopingItemsList);
+  }
+  mainEl.append(titleEl, shopingItemsList);
+  appEl.append(mainEl);
+}
+function rendeInSaleSection(appEl: Element) {
+  let mainEl = document.createElement("main");
+  mainEl.className = "main";
+
+  let titleEl = document.createElement("h2");
+  titleEl.className = "title";
+  titleEl.textContent = "Home";
+
+  let shopingItemsList = document.createElement("ul");
+  shopingItemsList.className = "shoping-items";
+  let guisItems = state.store.filter((item) => {
+    return item.discountedPrice;
+  });
+  for (let item of guisItems) {
+    renderShoppingItems(item, shopingItemsList);
+  }
+  mainEl.append(titleEl, shopingItemsList);
+  appEl.append(mainEl);
+}
+
 function renderShoppingItems(item: Store, shopingItemsList: HTMLElement) {
   let shopingItemEl = document.createElement("li");
   shopingItemEl.className = "shopping-item";
@@ -300,30 +258,36 @@ function renderFooter() {
 
   return footerEl;
 }
-function renderProductDetailsPage() {
+function renderProductDetailsPage(appEl: Element) {
   let productDetailsDiv = document.createElement("div");
   productDetailsDiv.className = "product-details";
 
-    let imageContainerDiv = document.createElement("div");
-    imageContainerDiv.className = "image-container";
-    let imageEl = document.createElement("img");
-    if(state.selectedItem ===null)return
-    imageEl.className = "shoping-item-details-img";
-    imageEl.src = state.selectedItem.image;
-    imageEl.alt = state.selectedItem.name;
-    let productDetailsContainerDiv = document.createElement("div");
-    productDetailsContainerDiv.className = "product-details-container";
-    let productNameH3 = document.createElement("h3");
-    productNameH3.className = "product-name";
-    productNameH3.textContent = state.selectedItem.name;
-    let addToBagButton = document.createElement("button");
-    addToBagButton.className = "add-to-bag-button";
-    addToBagButton.textContent = "ADD TO BAG";
-    productDetailsContainerDiv.append(productNameH3, addToBagButton);
-    imageContainerDiv.append(imageEl);
-    productDetailsDiv.append(imageContainerDiv, productDetailsContainerDiv);
+  let imageContainerDiv = document.createElement("div");
+  imageContainerDiv.className = "image-container";
+  let imageEl = document.createElement("img");
 
-  return productDetailsDiv;
+  if (state.selectedItem === null) return;
+
+  imageEl.className = "shoping-item-details-img";
+  imageEl.src = state.selectedItem.image;
+  imageEl.alt = state.selectedItem.name;
+
+  let productDetailsContainerDiv = document.createElement("div");
+  productDetailsContainerDiv.className = "product-details-container";
+
+  let productNameH3 = document.createElement("h3");
+  productNameH3.className = "product-name";
+  productNameH3.textContent = state.selectedItem.name;
+
+  let addToBagButton = document.createElement("button");
+  addToBagButton.className = "add-to-bag-button";
+  addToBagButton.textContent = "ADD TO BAG";
+
+  productDetailsContainerDiv.append(productNameH3, addToBagButton);
+  imageContainerDiv.append(imageEl);
+  productDetailsDiv.append(imageContainerDiv, productDetailsContainerDiv);
+
+  appEl.append(productDetailsDiv);
 }
 function render() {
   // finding the container, and clearing it
@@ -331,14 +295,31 @@ function render() {
   if (appEl === null) return;
   appEl.textContent = "";
 
-  let headerEl = renderHeader();
-  let mainEl = renderMain();
-  let footerEl = renderFooter();
-  let mainEl1 = renderProductDetailsPage();
-  if (state.selectedItem === null) {
-    appEl.append(headerEl, mainEl, footerEl);
-  } else {
-    appEl.append(headerEl, mainEl1, footerEl);
-  }
+  renderHeader(appEl);
+  if (state.selectedItem === null && state.page === "home")
+    renderHomePage(appEl);
+  else renderProductDetailsPage(appEl);
+
+  // if (state.page === "home") renderHomePage(appEl);
+  if (state.selectedItem === null && state.page === "girls")
+    renderGirlsSection(appEl);
+  if (state.selectedItem === null && state.page === "guys")
+    rendeGuyssSection(appEl);
+  if (state.selectedItem === null && state.page === "sale")
+    rendeInSaleSection(appEl);
+
+  renderFooter();
+  // let mainEl = renderGirlsSection();
+  // let footerEl = renderFooter();
+  // let mainEl1 = renderProductDetailsPage();
+
+  // if (state.selectedItem === null) {
+  //   appEl.append(headerEl, mainEl, footerEl);
+  // } else {
+  //   // @ts-ignore
+  //   appEl.append(headerEl, mainEl1, footerEl);
+  // }
 }
 render();
+getStoreItems();
+window.state = state;
