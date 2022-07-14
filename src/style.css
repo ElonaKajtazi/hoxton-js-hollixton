@@ -14,7 +14,6 @@
   grid-auto-flow: row;
   /* height: 100vh; */
   position: relative;
- 
 }
 
 ul {
@@ -54,7 +53,6 @@ img {
 }
 .main {
   padding: 0.5rem 2rem;
- 
 }
 .shoping-item__img {
   width: 200px;
@@ -182,4 +180,71 @@ img {
   border-radius: 20px;
   width: 90%;
   color: #1c2e54;
+}
+.sign-in-modal__wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  display: grid;
+  place-content: center;
+}
+.sign-in-modal__container {
+  position: relative;
+  background-color: white;
+  padding: 2rem;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 1rem;
+  width: 250px;
+  border-radius: 10px;
+}
+.sign-in-modal__close-button {
+  all: unset;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  /* font-size: 1.5rem; */
+  color: #1c2e54;
+  cursor: pointer;
+}
+.sign-in-modal__form {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 1rem;
+}
+.sign-in-modal__form-title {
+  color: #1c2e54;
+}
+.input {
+  padding: 0.3rem;
+  border: solid 1px #1c2e54;
+  border-radius: 20px;
+  width: 90%;
+  color: #1c2e54;
+}
+.email__label {
+  color: black;
+  text-align: left;
+  display: grid;
+  gap: 0.5rem;
+}
+.password__label {
+  color: black;
+  text-align: left;
+  display: grid;
+  gap: 0.5rem;
+}
+.sign-in-button {
+  background-color: #0f6c9e;
+  color: white;
+  /* height: 50px; */
+  padding: 0.7rem;
+  border-radius: 25px;
+  border: 5px solid white;
+  font-weight: bolder;
+
 }

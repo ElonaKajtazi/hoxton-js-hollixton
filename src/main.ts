@@ -15,14 +15,14 @@ type State = {
   store: StoreItem[];
   selectedItem: StoreItem | null;
   page: "home" | "girls" | "guys" | "sale";
-  modals: "search" | "bag" | "";
+  modals: "search" | "bag" | "sign-in" | "";
 };
 // creating state
 let state: State = {
   store: [],
   selectedItem: null,
   page: "home",
-  modals: "",
+  modals: "sign-in",
 };
 // fetching the data from the server
 function getStoreItems() {
@@ -112,6 +112,10 @@ function renderHeader(appEl: Element) {
   let rightLiItem1 = document.createElement("li");
   rightLiItem1.className = "nav-list__item";
   rightLiItem1.textContent = "👤";
+  rightLiItem1.addEventListener("click", function () {
+    state.modals = "sign-in";
+    render();
+  });
 
   let rightLiItem2 = document.createElement("li");
   rightLiItem2.className = "nav-list__item";
@@ -303,15 +307,6 @@ function renderProductDetailsPage(appEl: Element) {
   appEl.append(productDetailsDiv);
 }
 function renderSearchModal(appEl: Element) {
-  //   <div class="search-modal__wrapper">
-  //   <div class="search-modal__container">
-  //     <button class="search-modal__close-button">x</button>
-  //     <h3 class="search-modal__title">Search your favorite items!</h3>
-  //     <form>
-  //       <input class="search-input" type="text" placeholder="Search..." />
-  //     </form>
-  //   </div>
-  // </div>
   let searchModalWrapper = document.createElement("div");
   searchModalWrapper.className = "search-modal__wrapper";
 
@@ -345,6 +340,54 @@ function renderSearchModal(appEl: Element) {
   searchModalWrapper.append(searchModalContainer);
   appEl.append(searchModalWrapper);
 }
+function renderSignInModal(appEl: Element) {
+  let signInModalWrapper = document.createElement("div");
+  signInModalWrapper.className = "sign-in-modal__wrapper";
+
+  let SignInModalContainer = document.createElement("div");
+  SignInModalContainer.className = "sign-in-modal__container";
+
+  let signInModalCloseButton = document.createElement("button");
+  signInModalCloseButton.className = "sign-in-modal__close-button";
+  signInModalCloseButton.textContent = "x";
+  signInModalCloseButton.addEventListener("click", () => {
+    state.modals = "";
+    render();
+  });
+  let sigInModalTitle = document.createElement("h3");
+  sigInModalTitle.className = "sign-in-modal__title";
+  sigInModalTitle.textContent = "Sign In";
+
+  let searchModalForm = document.createElement("form");
+  searchModalForm.className = "sign-in-modal__form";
+  let emailLabel = document.createElement("label");
+  emailLabel.className = "email__label";
+  emailLabel.textContent = "Email";
+  let searchModalInput = document.createElement("input");
+  searchModalInput.className = "input";
+  searchModalInput.type = "email";
+  let passwordLabel = document.createElement("label");
+  passwordLabel.className = "password__label";
+  passwordLabel.textContent = "Password";
+  let searchModalInput1 = document.createElement("input");
+  searchModalInput1.className = "input";
+  searchModalInput1.type = "password";
+
+  let signInButton = document.createElement("button");
+  signInButton.className = "sign-in-button";
+  signInButton.textContent = "Sign In";
+
+  searchModalForm.append(emailLabel, passwordLabel, signInButton);
+  emailLabel.append(searchModalInput);
+  passwordLabel.append(searchModalInput1);
+  SignInModalContainer.append(
+    signInModalCloseButton,
+    sigInModalTitle,
+    searchModalForm
+  );
+  signInModalWrapper.append(SignInModalContainer);
+  appEl.append(signInModalWrapper);
+}
 // rendering the whole app
 function render() {
   // finding the container, and clearing it
@@ -367,6 +410,7 @@ function render() {
 
   renderFooter(appEl);
   if (state.modals === "search") renderSearchModal(appEl);
+  if (state.modals === "sign-in") renderSignInModal(appEl);
   // let mainEl = renderGirlsSection();
   // let footerEl = renderFooter();
   // let mainEl1 = renderProductDetailsPage();
