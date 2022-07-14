@@ -9,20 +9,21 @@ type StoreItem = {
   discountedPrice?: number;
   dateEntered: string;
   stock: number;
+
 };
 // creating the state type
 type State = {
   store: StoreItem[];
   selectedItem: StoreItem | null;
-  show: "itmes" | "details";
   page: "home" | "girls" | "guys" | "sale";
+  modals: "search" | "bag"| ""
 };
 // creating state
 let state: State = {
   store: [],
   selectedItem: null,
-  show: "itmes",
   page: "home",
+  modals: "search",
 };
 // fetching the data from the server
 function getStoreItems() {
@@ -298,6 +299,36 @@ function renderProductDetailsPage(appEl: Element) {
 
   appEl.append(productDetailsDiv);
 }
+function renderSearchModal (appEl: Element) {
+//   <div class="search-modal__wrapper">
+//   <div class="search-modal__container">
+//     <button class="search-modal__close-button">x</button>
+//     <h3 class="search-modal__title">Search your favorite items!</h3>
+//     <form>
+//       <input class="search-input" type="text" placeholder="Search..." />
+//     </form>
+//   </div>
+// </div>
+  let searchModalWrapper = document.createElement("div");
+  searchModalWrapper.className = "search-modal__wrapper";
+  let searchModalContainer = document.createElement("div");
+  searchModalContainer.className = "search-modal__container";
+  let searchModalCloseButton = document.createElement("button");
+  searchModalCloseButton.className = "search-modal__close-button";
+  searchModalCloseButton.textContent = "x";
+  let searchModalTitle = document.createElement("h3");
+  searchModalTitle.className = "search-modal__title";
+  searchModalTitle.textContent = "Search your favorite items!";
+  let searchModalForm = document.createElement("form");
+  let searchModalInput = document.createElement("input");
+  searchModalInput.className = "search-input";
+  searchModalInput.type = "text";
+  searchModalInput.placeholder = "Search...";
+  searchModalForm.append(searchModalInput);
+  searchModalContainer.append(searchModalCloseButton, searchModalTitle, searchModalForm);
+  searchModalWrapper.append(searchModalContainer);
+  appEl.append(searchModalWrapper);
+}
 // rendering the whole app
 function render() {
   // finding the container, and clearing it
@@ -306,8 +337,7 @@ function render() {
   appEl.textContent = "";
 
   renderHeader(appEl);
-  if (state.selectedItem === null && state.page === "home")
-    renderHomePage(appEl);
+  if (state.selectedItem === null && state.page === "home") renderHomePage(appEl);
   else renderProductDetailsPage(appEl);
 
   // if (state.page === "home") renderHomePage(appEl);
@@ -319,6 +349,7 @@ function render() {
     rendeInSaleSection(appEl);
 
   renderFooter(appEl);
+  if (state.modals==="search") renderSearchModal(appEl);
   // let mainEl = renderGirlsSection();
   // let footerEl = renderFooter();
   // let mainEl1 = renderProductDetailsPage();
